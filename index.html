@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <style>
+        /* 通用样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* 导航栏样式 */
+        .nav {
+            display: flex;
+            align-items: center;
+            height: 60px;
+            padding: 0 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav .title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .nav .spacer {
+            flex: 1;
+        }
+
+        .nav a {
+            padding: 8px 15px;
+            text-decoration: none;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #007bff;
+        }
+
+        /* 容器布局 */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* 博客列表样式 */
+        .blog {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .blog .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .blog .date {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .blog .desc {
+            text-indent: 2em;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* PDF查看器样式 */
+        .pdf-container {
+            width: 100%;
+            height: 800px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .pdf-container {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav">
+        <span class="title">qadty12138的博客</span>
+        <span class="spacer"></span>
+    </div>
+
+    <!-- 内容容器 -->
+    <div class="container">
+        <!-- 博客文章 -->
+        <div class="blog">
+            <div class="title">实验报告展示</div>
+            <div class="date">2025-03-12</div>
+            <div class="desc">
+                以下是我最近的实验报告PDF文档，您可以直接在页面中查看或下载保存。
+            </div>
+            
+            <!-- PDF嵌入 -->
+            <div class="pdf-container">
+                <embed src="实验报告.pdf" type="application/pdf" width="100%" height="100%">
+            </div>
+            
+            <p style="text-align: center; color: #666;">
+                无法查看PDF？<a href="实验报告.pdf" download>点击下载</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
