@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧校园导航系统 - 用户研究项目</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+        
+        /* 导航栏 */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav li {
+            margin: 0;
+        }
+        
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 20px 30px;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        nav a.active {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 标题区域 */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .hero p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        /* 内容区块 */
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            font-size: 2em;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        h4 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        /* 团队信息卡片 */
+        .team-info {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .team-member {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-weight: 500;
+        }
+        
+        /* 列表样式 */
+        ul {
+            margin-left: 25px;
+            margin-top: 15px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+        
+        /* 高亮框 */
+        .highlight {
+            background: #fff3cd;
+            padding: 20px;
+            border-left: 5px solid #ffc107;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            padding: 20px;
+            border-left: 5px solid #2196f3;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        /* 表格样式 */
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+            font-size: 0.9em;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        tr:hover {
+            background: #e3f2fd;
+        }
+        
+        /* 统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        /* 访谈卡片 */
+        .interview-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .interview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .meta-item strong {
+            color: #667eea;
+            margin-right: 8px;
+        }
+        
+        .question {
+            color: #667eea;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .answer {
+            margin-left: 20px;
+            padding-left: 20px;
+            border-left: 3px solid #e0e0e0;
+            color: #555;
+        }
+        
+        .follow-up {
+            margin-left: 40px;
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+        }
+        
+        /* 按钮 */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-top: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* 数据可视化 */
+        .chart-placeholder {
+            background: #f8f9fa;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px dashed #ddd;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .hero p {
+                font-size: 1.1em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            table {
+                font-size: 0.8em;
+            }
+            
+            th, td {
+                padding: 8px;
+            }
+        }
+        
+        /* 页脚 */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+        
+        footer p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="#home" class="nav-link active" onclick="showSection('home')">首页</a></li>
+            <li><a href="#team" class="nav-link" onclick="showSection('team')">团队介绍</a></li>
+            <li><a href="#proposal" class="nav-link" onclick="showSection('proposal')">项目提案</a></li>
+            <li><a href="#plan" class="nav-link" onclick="showSection('plan')">数据收集计划</a></li>
+            <li><a href="#interviews" class="nav-link" onclick="showSection('interviews')">访谈记录</a></li>
+            <li><a href="#survey" class="nav-link" onclick="showSection('survey')">调查数据</a></li>
+        </ul>
+    </nav>
+    
+    <!-- 标题区域 -->
+    <div class="hero">
+        <h1>智慧校园导航系统</h1>
+        <p>Smart Campus Navigation Team - 用户研究项目</p>
+    </div>
+    
+    <div class="container">
+        <!-- 首页 -->
+        <div id="home" class="section active">
+            <h2>项目概述</h2>
+            <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 30px;">
+                本项目旨在设计一款移动应用程序，帮助大学生更高效地在校园中导航、寻找可用学习空间并发现校园活动。
+                目标用户是经常在不同校园位置之间移动的本科生和研究生。
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">用户访谈</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">问卷调查</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">核心功能</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">用户满意度目标</div>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h3 style="margin-top: 0;">核心价值主张</h3>
+                <ul>
+                    <li><strong>智能导航：</strong>室内外一体化导航，精准到房间</li>
+                    <li><strong>实时信息：</strong>学习空间实时占用情况查询</li>
+                    <li><strong>活动聚合：</strong>个性化校园活动推荐与提醒</li>
+                    <li><strong>节省时间：</strong>减少50%的寻路和找座位时间</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 团队介绍 -->
+        <div id="team" class="section">
+            <h2>团队介绍</h2>
+            <div class="team-info">
+                <h3 style="margin-top: 0; color: #333;">智慧校园导航团队</h3>
+                <p style="font-size: 1.1em; margin-bottom: 20px;">
+                    我们是一支充满激情的学生团队，致力于通过技术改善校园生活体验。
+                </p>
+                <div class="team-members">
+                    <div class="team-member">👨‍💻 许嘉诺 - 2022200130156<br><small>项目负责人 & 用户研究</small></div>
+                    <div class="team-member">👩‍💻 郑春英 - 202200130247<br><small>数据分析 & 问卷设计</small></div>
+                    <div class="team-member">👨‍💻 郑阳 - 202200130131<br><small>访谈执行 & 内容整理</small></div>
+                </div>
+            </div>
+            
+            <h3>团队分工</h3>
+            <table>
+                <tr>
+                    <th>成员</th>
+                    <th>主要职责</th>
+                    <th>贡献</th>
+                </tr>
+                <tr>
+                    <td>许嘉诺</td>
+                    <td>项目负责人、用户研究</td>
+                    <td>原始写作、访谈设计、最终审核</td>
+                </tr>
+                <tr>
+                    <td>郑春英</td>
+                    <td>数据分析、问卷设计</td>
+                    <td>原始写作、数据收集与整理</td>
+                </tr>
+                <tr>
+                    <td>郑阳</td>
+                    <td>访谈执行、内容整理</td>
+                    <td>原始写作、文档编写</td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- 项目提案 -->
+        <div id="proposal" class="section">
+            <h2>项目提案</h2>
+            
+            <h3>📋 问题背景</h3>
+            <p>在大学校园中，学生面临着诸多挑战：</p>
+            <ul>
+                <li><strong>导航困难：</strong>特别是新生和在大型建筑内，经常迷路或找不到教室</li>
+                <li><strong>学习空间短缺：</strong>不知道哪里有可用的自习位置，浪费时间寻找</li>
+                <li><strong>信息分散：</strong>校园活动信息散布在多个平台，容易错过</li>
+                <li><strong>时间浪费：</strong>在寻路和找座位上耗费大量时间</li>
+            </ul>
+            
+            <h3>💡 解决方案</h3>
+            <div class="info-box">
+                <p style="font-size: 1.1em; margin-bottom: 15px;">
+                    我们计划开发一款<strong>智慧校园导航系统</strong>，通过移动应用程序为学生提供一站式校园服务。
+                </p>
+            </div>
+            
+            <h3>🎯 核心功能</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4 style="color: white; margin-top: 0;">🗺️ 智能导航</h4>
+                    <p style="opacity: 0.9;">室内外导航、AR实景导航、最优路径规划</p>
+                </div>
+                <div class="stat-card">
+                    <h4 style="color: white; margin-top: 0;">📚 空间查询</h4>
+                    <p style="opacity: 0.9;">实时座位信息、空间预约、设施查询</p>
+                </div>
+                <div class="stat-card">
+                    <h4 style="color: white; margin-top: 0;">🎉 活动发现</h4>
+                    <p style="opacity: 0.9;">活动聚合、个性推荐、日历同步</p>
+                </div>
+            </div>
+            
+            <h3>👥 目标用户</h3>
+            <ul>
+                <li><strong>主要用户：</strong>本科生和研究生（所有年级）</li>
+                <li><strong>核心场景：</strong>课程间移动、自习空间寻找、参与校园活动</li>
+                <li><strong>使用频率：</strong>每天多次使用，特别是新学期和考试周</li>
+            </ul>
+            
+            <h3>📊 预期成果</h3>
+            <div class="highlight">
+                <ul>
+                    <li>减少学生50%的寻路时间</li>
+                    <li>提高学习空间利用率30%</li>
+                    <li>增加校园活动参与度40%</li>
+                    <li>提升整体校园体验满意度</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 数据收集计划 -->
+        <div id="plan" class="section">
+            <h2>数据收集计划</h2>
+            
+            <h3>🎯 研究目标</h3>
+            <p>深入了解学生在校园导航、学习空间使用和活动参与方面的真实需求、痛点和期望，为产品设计提供数据支持。</p>
+            
+            <h3>📝 研究方法</h3>
+            
+            <h4>1. 用户访谈（定性研究）</h4>
+            <div class="info-box">
+                <p><strong>访谈人数：</strong>4位潜在用户</p>
+                <p><strong>访谈时长：</strong>30-40分钟/人</p>
+                <p><strong>访谈形式：</strong>半结构化深度访谈</p>
+                <p><strong>访谈地点：</strong>图书馆、实验室、学生活动中心等舒适环境</p>
+            </div>
+            
+            <p><strong>访谈主题：</strong></p>
+            <ul>
+                <li><strong>话题1：</strong>校园导航与寻路体验（5个核心问题 + 追问）</li>
+                <li><strong>话题2：</strong>寻找和使用学习空间（5个核心问题 + 追问）</li>
+                <li><strong>话题3：</strong>校园活动与社交活动（5个核心问题 + 追问）</li>
+            </ul>
+            
+            <h4>2. 问卷调查（定量研究）</h4>
+            <div class="info-box">
+                <p><strong>调查人数：</strong>15位潜在用户</p>
+                <p><strong>问卷题目：</strong>19个问题（选择题 + 开放题）</p>
+                <p><strong>发放渠道：</strong>线上问卷平台、班级群、学生组织</p>
+                <p><strong>调查周期：</strong>5天</p>
+            </div>
+            
+            <p><strong>问卷内容：</strong></p>
+            <ul>
+                <li>基本信息（5题）：学年、专业、使用频率等</li>
+                <li>导航体验（5题）：导航信心、困难频率、工具使用等</li>
+                <li>学习空间（5题）：满意度、寻找频率、需求类型等</li>
+                <li>活动参与（4题）：信息渠道、满意度、参与频率等</li>
+            </ul>
+            
+            <h3>📅 时间安排</h3>
+            <table>
+                <tr>
+                    <th>阶段</th>
+                    <th>活动内容</th>
+                    <th>时间</th>
+                    <th>负责人</th>
+                    <th>状态</th>
+                </tr>
+                <tr>
+                    <td>第1周</td>
+                    <td>设计访谈提纲和问卷</td>
+                    <td>10月8日-10月14日</td>
+                    <td>许嘉诺、郑春英</td>
+                    <td>✅ 已完成</td>
+                </tr>
+                <tr>
+                    <td>第2周</td>
+                    <td>招募参与者并进行访谈</td>
+                    <td>10月15日-10月18日</td>
+                    <td>郑阳、许嘉诺</td>
+                    <td>✅ 已完成</td>
+                </tr>
+                <tr>
+                    <td>第2周</td>
+                    <td>发放问卷并收集数据</td>
+                    <td>10月15日-10月20日</td>
+                    <td>郑春英</td>
+                    <td>✅ 已完成</td>
+                </tr>
+                <tr>
+                    <td>第3周</td>
+                    <td>数据分析和整理</td>
+                    <td>10月21日-10月27日</td>
+                    <td>全体成员</td>
+                    <td>🔄 进行中</td>
+                </tr>
+                <tr>
+                    <td>第4周</td>
+                    <td>撰写研究报告</td>
+                    <td>10月28日-11月3日</td>
+                    <td>许嘉诺</td>
+                    <td>📅 计划中</td>
+                </tr>
+            </table>
+            
+            <h3>✅ 已完成成果</h3>
+            <div class="highlight">
+                <ul>
+                    <li>✅ 4份完整的用户访谈记录（含录音转写）</li>
+                    <li>✅ 15份有效问卷数据</li>
+                    <li>✅ 访谈主题分析和用户画像</li>
+                    <li>✅ 问卷数据统计和可视化分析</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 访谈记录部分 - 替换原来的内容 -->
+<div id="interviews" class="section">
+    <h2>用户访谈记录</h2>
+    
+    <div class="info-box">
+        <p><strong>访谈说明：</strong>以下是4位用户的完整访谈记录。每次访谈时长30-40分钟，涵盖校园导航、学习空间和活动参与三大主题。</p>
+    </div>
+    
+    <!-- 访谈1 - 完整版 -->
+    <div class="interview-card">
+        <h3>访谈对象 #1 - 大二计算机专业学生</h3>
+        <div class="interview-meta">
+            <div class="meta-item"><strong>代号：</strong>S001</div>
+            <div class="meta-item"><strong>年级：</strong>大二</div>
+            <div class="meta-item"><strong>专业：</strong>计算机科学与技术</div>
+            <div class="meta-item"><strong>访谈时间：</strong>2024年10月15日</div>
+            <div class="meta-item"><strong>访谈地点：</strong>图书馆咖啡厅</div>
+            <div class="meta-item"><strong>访谈时长：</strong>35分钟</div>
+        </div>
+        
+        <h4>🎤 热身问题</h4>
+        <div class="question">Q: 能介绍一下自己吗？你是哪个年级，什么专业？</div>
+        <div class="answer">A: 我是大二学生，计算机科学与技术专业的。目前主要在本部校区上课。</div>
+        
+        <div class="question">Q: 在典型的一天里，你在校园里待多长时间？</div>
+        <div class="answer">A: 通常从早上8点到晚上8点，大概12个小时左右。因为课程比较多，中间也会在图书馆自习。</div>
+        
+        <div class="question">Q: 能描述一下你典型的一天在校园里是怎样的吗？</div>
+        <div class="answer">A: 早上通常有两节课，在教学楼A座。中午在食堂吃饭，然后会去图书馆或者实验室学习。下午有时候有课，有时候会参加社团活动。晚上继续在图书馆学习到晚上8点左右。</div>
+        
+        <h4>🗺️ 话题1：校园导航与寻路</h4>
+        
+        <div class="question">Q1: 回想一下昨天或你最近在校园的一天，能带我走一遍你是如何从一个地方移动到另一个地方的吗？</div>
+        <div class="answer">
+            A: 昨天我早上先去了教学楼B座上高数课，然后需要去教学楼D座上专业课。中间只有10分钟的时间，我直接走最熟悉的路线，穿过中央广场过去。
+            <div class="follow-up">
+                <strong>追问：你是如何决定走哪条路的？</strong><br>
+                A: 主要是凭经验吧，因为我已经走过很多次了。但是那条路人比较多，有时候会比较拥挤。
+            </div>
+            <div class="follow-up">
+                <strong>追问：有没有不确定该往哪走的时候？</strong><br>
+                A: 有啊，特别是刚开学的时候。有一次要去新开的创新实验室，在工科楼C座3楼，我找了快20分钟才找到。楼里的指示牌不太清楚，房间号也不连续。
+            </div>
+        </div>
+        
+        <div class="question">Q2: 告诉我上一次你需要找校园里一个从未去过的新地方的经历，发生了什么？</div>
+        <div class="answer">
+            A: 上个月我需要去行政楼办理一个证明。我只知道是行政楼203室，但不知道具体在哪栋楼。
+            <div class="follow-up">
+                <strong>追问：你做了什么来找到它？</strong><br>
+                A: 我先在校园网站上查了一下，但是信息不是很明确。然后我问了辅导员，她给我指了大概的方向。到了那边之后，我又问了门卫，最后才找到。
+            </div>
+            <div class="follow-up">
+                <strong>追问：花了多长时间？</strong><br>
+                A: 前前后后大概花了半个小时，还差点迟到。
+            </div>
+            <div class="follow-up">
+                <strong>追问：那次经历让你感觉如何？</strong><br>
+                A: 挺焦虑的，因为怕迟到。而且感觉如果有个应用能直接告诉我位置和路线就好了。
+            </div>
+        </div>
+        
+        <div class="question">Q3: 能描述一个你在校园里迷路或者对该往哪走感到困惑的情况吗？</div>
+        <div class="answer">
+            A: 有一次晚上参加讲座，在新建的国际交流中心。那个楼是新的，我从来没去过。天已经黑了，路标也不清楚，我绕着那片区域走了好几圈。
+            <div class="follow-up">
+                <strong>追问：是什么导致了困惑？</strong><br>
+                A: 主要是那片区域比较新，路标不明显。而且晚上光线不好，很难看清楚建筑物的标识。地图软件显示的位置也不太准确。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你最后是怎么找到的？</strong><br>
+                A: 最后是看到有其他人往那边走，我就跟着去了。原来入口在建筑的侧面，不是正面。
+            </div>
+        </div>
+        
+        <h4>📚 话题2：寻找和使用学习空间</h4>
+        
+        <div class="question">Q1: 告诉我上一次你需要在校园找个地方学习的经历，带我走一遍你做了什么？</div>
+        <div class="answer">
+            A: 上周四下午我需要找个安静的地方准备考试。我先去了图书馆，但是自习区已经坐满了。
+            <div class="follow-up">
+                <strong>追问：你最后去了别的地方吗？</strong><br>
+                A: 最后我去了教学楼A座的自习室，那里人比较少，但是偶尔会有点吵。
+            </div>
+        </div>
+        
+        <div class="question">Q2: 能描述一个你在找可用学习空间时遇到的挫折经历吗？</div>
+        <div class="answer">
+            A: 期末考试周的时候简直是噩梦。我早上9点去图书馆，已经没座位了。然后去了三个不同的教学楼，自习室也都满了。
+            <div class="follow-up">
+                <strong>追问：你花了多少时间找？</strong><br>
+                A: 那次大概花了40分钟才找到座位。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你最后做了什么？</strong><br>
+                A: 最后在一个比较偏远的教学楼找到了位置，但是那里没有空调，夏天很热。
+            </div>
+        </div>
+        
+        <h4>🎉 话题3：校园活动与社交活动</h4>
+        
+        <div class="question">Q1: 想想你参加的上一个校园活动，你是如何第一次听说它的？</div>
+        <div class="answer">
+            A: 上周我参加了一个编程竞赛的讲座。是在我们专业的微信群里看到的通知。
+            <div class="follow-up">
+                <strong>追问：找到所需的所有信息容易吗？</strong><br>
+                A: 不太容易。我后来还专门问了发通知的学长具体是哪个报告厅，因为工科楼有好几个。
+            </div>
+        </div>
+        
+        <div class="question">Q2: 能告诉我一次你错过了想参加的活动的经历吗？</div>
+        <div class="answer">
+            A: 有一次学校请了一个著名的校友来做讲座，我本来很想去，但是错过了。
+            <div class="follow-up">
+                <strong>追问：你为什么错过了？</strong><br>
+                A: 我根本不知道有这个活动。活动通知只在学校官网发布了，我很少去看官网。等我从同学那里听说时，活动已经结束了。
+            </div>
+            <div class="follow-up">
+                <strong>追问：错过它你感觉如何？</strong><br>
+                A: 特别遗憾，因为那个校友是我很崇拜的人。我觉得如果有个应用能把所有活动信息集中起来推送给我就好了。
+            </div>
+        </div>
+        
+        <h4>💡 结束访谈</h4>
+        <div class="question">有什么我们没有谈到但你认为重要的事情吗？</div>
+        <div class="answer">A: 我觉得信息太分散了是最大的问题。如果能有一个统一的平台把导航、空间查询和活动信息都整合起来就太好了。</div>
+        
+        <div class="question">你对如何改善这些体验有什么建议吗？</div>
+        <div class="answer">A: 首先是室内导航功能，特别是大型教学楼。其次是实时显示学习空间的占用情况。最后是活动信息能够个性化推送，根据我的兴趣来推荐。</div>
+        
+        <div class="highlight" style="margin-top: 20px;">
+            <h4 style="margin-top: 0;">✨ 核心洞察</h4>
+            <ul>
+                <li><strong>痛点1：</strong>室内导航缺失导致在大楼内迷路，浪费时间</li>
+                <li><strong>痛点2：</strong>考试周找座位困难，40分钟才找到位置</li>
+                <li><strong>痛点3：</strong>活动信息只在官网发布，容易错过</li>
+                <li><strong>需求：</strong>统一平台整合导航、空间查询和活动信息</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 访谈2 - 完整版 -->
+    <div class="interview-card">
+        <h3>访谈对象 #2 - 研一网络安全专业学生</h3>
+        <div class="interview-meta">
+            <div class="meta-item"><strong>代号：</strong>S002</div>
+            <div class="meta-item"><strong>年级：</strong>研究生一年级</div>
+            <div class="meta-item"><strong>专业：</strong>网络安全</div>
+            <div class="meta-item"><strong>访谈时间：</strong>2024年10月16日</div>
+            <div class="meta-item"><strong>访谈地点：</strong>实验室</div>
+            <div class="meta-item"><strong>访谈时长：</strong>38分钟</div>
+        </div>
+        
+        <h4>🎤 热身问题</h4>
+        <div class="question">Q: 能介绍一下自己吗？</div>
+        <div class="answer">A: 我是研一的学生，网络安全专业。因为要做实验，我大部分时间都在实验室。</div>
+        
+        <div class="question">Q: 在典型的一天里，你在校园里待多长时间？</div>
+        <div class="answer">A: 基本上每天都在，从早上9点到晚上10点，有时候更晚。</div>
+        
+        <h4>🗺️ 话题1：校园导航与寻路</h4>
+        
+        <div class="question">Q1: 回想一下昨天或你最近在校园的一天，能带我走一遍你是如何从一个地方移动到另一个地方的吗？</div>
+        <div class="answer">
+            A: 昨天我先去了实验楼做实验，中午去食堂吃饭，然后去了图书馆查阅一些文献，晚上回到实验室继续工作。
+            <div class="follow-up">
+                <strong>追问：你是如何决定走哪条路的？</strong><br>
+                A: 主要看时间和天气。如果赶时间我会走近路，不赶时间就走风景好的路。下雨的话会选择有连廊的路线。
+            </div>
+        </div>
+        
+        <div class="question">Q2: 告诉我上一次你需要找校园里一个从未去过的新地方的经历。</div>
+        <div class="answer">
+            A: 上个月要去新校区参加一个学术会议，那边我完全不熟悉。
+            <div class="follow-up">
+                <strong>追问：你做了什么来找到它？</strong><br>
+                A: 我先坐校车到新校区，然后用地图找到大概位置。但是那个会议室在一栋新楼的地下一层，地图根本没有室内信息。我问了好几个人才找到电梯。
+            </div>
+            <div class="follow-up">
+                <strong>追问：花了多长时间？</strong><br>
+                A: 从下车到找到会议室，大概20分钟。
+            </div>
+            <div class="follow-up">
+                <strong>追问：那次经历让你感觉如何？</strong><br>
+                A: 有点着急，因为会议马上要开始了。特别是在楼里找不到路的时候，感觉很无助。
+            </div>
+        </div>
+        
+        <div class="question">Q3: 能描述一个你在校园里迷路或者对该往哪走感到困惑的情况吗？</div>
+        <div class="answer">
+            A: 有一次晚上去新建的工程实训中心找一个仪器室。那栋楼很大，走廊设计也很复杂。
+            <div class="follow-up">
+                <strong>追问：是什么导致了困惑？</strong><br>
+                A: 楼层布局不规则，而且指示牌不够明显。我按照房间号找，但房间号的编排逻辑我看不懂。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你最后是怎么找到的？</strong><br>
+                A: 给实验室的师兄打电话，他远程指导我怎么走。最后花了15分钟才找到。
+            </div>
+            <div class="follow-up">
+                <strong>追问：当时什么能帮到你？</strong><br>
+                A: 如果有楼层的详细平面图，或者能用手机扫描房间号就显示位置就好了。
+            </div>
+        </div>
+        
+        <h4>📚 话题2：寻找和使用学习空间</h4>
+        
+        <div class="question">Q1: 告诉我上一次你需要在校园找个地方学习的经历。</div>
+        <div class="answer">
+            A: 上周要准备开题报告，需要一个安静的地方集中精力。我通常会去图书馆的研究生阅览室。
+            <div class="follow-up">
+                <strong>追问：你是如何决定去哪里的？</strong><br>
+                A: 研究生阅览室比较安静，人也不多，而且有充电插座和良好的照明。
+            </div>
+        </div>
+        
+        <div class="question">Q2: 能描述一个你在找可用学习空间时遇到的挫折经历吗？</div>
+        <div class="answer">
+            A: 有一次小组开会需要讨论室，我在图书馆的预约系统上看到有空房间，但到了之后发现被临时占用了。
+            <div class="follow-up">
+                <strong>追问：什么让它令人沮丧？</strong><br>
+                A: 系统信息不准确。我们浪费了时间，还得重新找地方。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你花了多少时间找？</strong><br>
+                A: 最后在教学楼找了三个空教室才找到合适的，花了差不多半小时。
+            </div>
+        </div>
+        
+        <div class="question">Q4: 告诉我一次你需要特定类型的学习环境的经历。</div>
+        <div class="answer">
+            A: 做论文实验数据分析时，我需要一个有大屏幕显示器的工作站。
+            <div class="follow-up">
+                <strong>追问：那次寻找容易还是困难？</strong><br>
+                A: 很困难。学校的高性能工作站不多，而且没有统一的查询系统。
+            </div>
+            <div class="follow-up">
+                <strong>追问：整个过程花了多长时间？</strong><br>
+                A: 从开始找到最后预约上，花了两天时间。
+            </div>
+        </div>
+        
+        <h4>🎉 话题3：校园活动与社交活动</h4>
+        
+        <div class="question">Q1: 想想你参加的上一个校园活动。</div>
+        <div class="answer">
+            A: 上个月参加了一个学术讲座，是人工智能方向的。
+            <div class="follow-up">
+                <strong>追问：你是如何第一次听说它的？</strong><br>
+                A: 导师在组会上提到的，说值得去听听。
+            </div>
+            <div class="follow-up">
+                <strong>追问：找到所需信息容易吗？</strong><br>
+                A: 这次还可以，因为是导师直接通知的。但很多其他活动我都是事后才知道。
+            </div>
+        </div>
+        
+        <div class="question">Q2: 能告诉我一次你错过了想参加的活动的经历吗？</div>
+        <div class="answer">
+            A: 上学期有个著名教授的讲座，我特别想去，但完全不知道。
+            <div class="follow-up">
+                <strong>追问：你为什么错过了？</strong><br>
+                A: 信息只在某个学院的网站上发布，我不是那个学院的所以没看到。
+            </div>
+            <div class="follow-up">
+                <strong>追问：错过它你感觉如何？</strong><br>
+                A: 非常遗憾，那是我研究方向的权威人物。
+            </div>
+        </div>
+        
+        <h4>💡 结束访谈</h4>
+        <div class="question">有什么我们没谈到但你认为重要的吗？</div>
+        <div class="answer">A: 我觉得研究生的需求和本科生不太一样。我们更需要专业的学术资源信息，比如实验室设备预约、学术讲座通知等。</div>
+        
+        <div class="question">你有什么改善建议吗？</div>
+        <div class="answer">A: 希望能有一个整合的平台，把各种信息集中起来。特别是跨学院的学术活动，应该有统一的发布渠道。</div>
+        
+        <div class="highlight" style="margin-top: 20px;">
+            <h4 style="margin-top: 0;">✨ 核心洞察</h4>
+            <ul>
+                <li><strong>痛点1：</strong>新校区和新建筑室内导航困难，地图信息不全</li>
+                <li><strong>痛点2：</strong>预约系统与实际不符，浪费时间</li>
+                <li><strong>痛点3：</strong>跨学院学术活动信息获取困难</li>
+                <li><strong>需求：</strong>高性能工作站统一查询系统，跨学院信息共享</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 访谈3 - 完整版 -->
+    <div class="interview-card">
+        <h3>访谈对象 #3 - 大三法学专业学生</h3>
+        <div class="interview-meta">
+            <div class="meta-item"><strong>代号：</strong>S003</div>
+            <div class="meta-item"><strong>年级：</strong>大三</div>
+            <div class="meta-item"><strong>专业：</strong>法学</div>
+            <div class="meta-item"><strong>访谈时间：</strong>2024年10月17日</div>
+            <div class="meta-item"><strong>访谈地点：</strong>学生活动中心</div>
+            <div class="meta-item"><strong>访谈时长：</strong>32分钟</div>
+        </div>
+        
+        <h4>🎤 热身问题</h4>
+        <div class="question">Q: 能介绍一下自己吗？</div>
+        <div class="answer">A: 我是大三学生，法学专业。我还是学生会的成员，经常组织各种活动。</div>
+        
+        <div class="question">Q: 典型的一天在校园待多长时间？</div>
+        <div class="answer">A: 大概从早上10点到下午5点，有时候晚上有活动会待到8、9点。</div>
+        
+        <h4>🗺️ 话题1：校园导航与寻路</h4>
+        
+        <div class="question">Q1: 回想最近一天，你是如何在校园移动的？</div>
+        <div class="answer">
+            A: 昨天我先去教学楼上法理学课，然后去学生活动中心开会，最后去体育馆参加瑜伽课。
+            <div class="follow-up">
+                <strong>追问：你是如何决定走哪条路的？</strong><br>
+                A: 我通常走最熟悉的路，除非那条路太挤或者天气不好。
+            </div>
+        </div>
+        
+        <div class="question">Q2: 告诉我上一次找新地方的经历。</div>
+        <div class="answer">
+            A: 上周要去艺术学院参观展览，我之前从没去过那栋楼。
+            <div class="follow-up">
+                <strong>追问：你做了什么？</strong><br>
+                A: 我问了一个同学大概方向，然后边走边看指示牌。
+            </div>
+            <div class="follow-up">
+                <strong>追问：花了多长时间？</strong><br>
+                A: 大概15分钟，还算顺利。
+            </div>
+        </div>
+        
+        <div class="question">Q3: 描述一次迷路的经历。</div>
+        <div class="answer">
+            A: 有一次晚上去新校区参加活动，那边我完全不熟悉。
+            <div class="follow-up">
+                <strong>追问：什么导致了困惑？</strong><br>
+                A: 新校区很大，而且天黑了路标看不清。手机地图显示的位置也不太准。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你最后怎么找到的？</strong><br>
+                A: 打电话给主办方，他们派人来接我了。
+            </div>
+        </div>
+        
+        <h4>📚 话题2：寻找和使用学习空间</h4>
+        
+        <div class="question">Q1: 告诉我上一次找学习空间的经历。</div>
+        <div class="answer">
+            A: 上周期中考试前，我需要找个安静的地方复习。我先去了图书馆，但人太多了。
+            <div class="follow-up">
+                <strong>追问：你最后留在那里了吗？</strong><br>
+                A: 没有，我去了法学院大楼的自习室，那里人相对少一些。
+            </div>
+        </div>
+        
+        <div class="question">Q2: 能描述一个你在找可用学习空间时遇到的挫折经历吗？</div>
+        <div class="answer">
+            A: 有一次我们小组要做案例分析讨论，需要一个讨论室。
+            <div class="follow-up">
+                <strong>追问：什么让它令人沮丧？</strong><br>
+                A: 我们去了三个地方都满了。图书馆的讨论室要提前三天预约，我们没有提前计划。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你花了多少时间找？</strong><br>
+                A: 花了将近一个小时，最后在咖啡厅找了个角落。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你最后做了什么？</strong><br>
+                A: 在咖啡厅讨论，但因为环境嘈杂，讨论效果不太好，我们说话还影响了别人。
+            </div>
+        </div>
+        
+        <div class="question">Q4: 告诉我一次你需要特定类型的学习环境的经历。</div>
+        <div class="answer">
+            A: 准备模拟法庭比赛时，我们需要一个安静但可以小声讨论的空间。
+            <div class="follow-up">
+                <strong>追问：那次寻找容易还是困难？</strong><br>
+                A: 挺困难的。完全安静的地方不让讨论，可以讨论的地方又太吵。
+            </div>
+            <div class="follow-up">
+                <strong>追问：整个过程花了多长时间？</strong><br>
+                A: 从想到这个需求到最后找到地方，花了两天时间。
+            </div>
+        </div>
+        
+        <h4>🎉 话题3：校园活动与社交活动</h4>
+        
+        <div class="question">Q1: 想想你参加的上一个校园活动。</div>
+        <div class="answer">
+            A: 上周参加了一个关于知识产权法的讲座。
+            <div class="follow-up">
+                <strong>追问：你是如何第一次听说它的？</strong><br>
+                A: 在法学院的微信公众号上看到的推送。
+            </div>
+            <div class="follow-up">
+                <strong>追问：找到所需信息容易吗？</strong><br>
+                A: 这次还挺容易的，信息很完整。但并不是每次都这样。
+            </div>
+        </div>
+        
+                <div class="question">Q2: 能告诉我一次你错过了想参加的活动的经历吗？</div>
+        <div class="answer">
+            A: 上学期有个实习招聘宣讲会，我很想去但错过了。
+            <div class="follow-up">
+                <strong>追问：你为什么错过了？</strong><br>
+                A: 信息只在就业指导中心的网站上发布，我很少去看那个网站。等同学告诉我时，已经结束了。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你什么时候意识到你错过了？</strong><br>
+                A: 活动结束当天晚上，同学在群里讨论的时候我才知道。
+            </div>
+            <div class="follow-up">
+                <strong>追问：错过它你感觉如何？</strong><br>
+                A: 特别懊恼，因为那是我很感兴趣的律所。错过了可能意味着少了一个实习机会。
+            </div>
+        </div>
+        
+        <div class="question">Q5: 描述一个你发现活动信息不完整的情况。</div>
+        <div class="answer">
+            A: 看到一个模拟法庭比赛的通知，但很多细节不清楚。
+            <div class="follow-up">
+                <strong>追问：缺少了什么信息？</strong><br>
+                A: 没说明报名截止时间、比赛规则细节、是否需要组队、有没有奖品等。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你最后参加了吗？为什么？</strong><br>
+                A: 因为信息不明确，而且报名流程太复杂，我最后放弃了。感觉组织得不够专业。
+            </div>
+        </div>
+        
+        <h4>💡 结束访谈</h4>
+        <div class="question">有什么我们没谈到但你认为重要的吗？</div>
+        <div class="answer">A: 我觉得活动信息的及时性很重要。很多时候等我知道的时候已经来不及了。</div>
+        
+        <div class="question">你有什么改善建议吗？</div>
+        <div class="answer">A: 希望有个统一的平台能整合所有信息，按照我的兴趣推送。还有就是学习空间的实时信息，这样不用白跑。</div>
+        
+        <div class="question">最后的想法？</div>
+        <div class="answer">A: 作为学生会成员，我也在想如何更好地传达活动信息。如果有这样一个应用，对我们组织活动也很有帮助。</div>
+        
+        <div class="highlight" style="margin-top: 20px;">
+            <h4 style="margin-top: 0;">✨ 核心洞察</h4>
+            <ul>
+                <li><strong>痛点1：</strong>讨论室难找且需提前3天预约，小组学习困难</li>
+                <li><strong>痛点2：</strong>实习招聘等重要信息只在特定网站发布</li>
+                <li><strong>痛点3：</strong>活动信息不完整导致参与率低</li>
+                <li><strong>需求：</strong>统一的活动信息平台和个性化推送系统</li>
+                <li><strong>特殊视角：</strong>作为学生会成员，深知信息传达困难</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 访谈4 - 完整版 -->
+    <div class="interview-card">
+        <h3>访谈对象 #4 - 大一生命科学专业学生</h3>
+        <div class="interview-meta">
+            <div class="meta-item"><strong>代号：</strong>S004</div>
+            <div class="meta-item"><strong>年级：</strong>大一</div>
+            <div class="meta-item"><strong>专业：</strong>生命科学</div>
+            <div class="meta-item"><strong>访谈时间：</strong>2024年10月18日</div>
+            <div class="meta-item"><strong>访谈地点：</strong>宿舍楼休息区</div>
+            <div class="meta-item"><strong>访谈时长：</strong>30分钟</div>
+        </div>
+        
+        <h4>🎤 热身问题</h4>
+        <div class="question">Q: 能介绍一下自己吗？</div>
+        <div class="answer">A: 我是大一新生，生命科学专业的。刚来学校两个月，还在熟悉校园环境。</div>
+        
+        <div class="question">Q: 典型的一天在校园待多长时间？</div>
+        <div class="answer">A: 从早上8点到晚上9点左右，基本一整天都在校园里。</div>
+        
+        <div class="question">Q: 能描述一下你典型的一天吗？</div>
+        <div class="answer">A: 早上起来去食堂吃早饭，然后去教室上课。中午在食堂吃饭，下午继续上课或者去实验室。晚上通常在图书馆自习。</div>
+        
+        <h4>🗺️ 话题1：校园导航与寻路</h4>
+        
+        <div class="question">Q1: 回想最近一天，你是如何在校园移动的？</div>
+        <div class="answer">
+            A: 昨天我先去生物楼上实验课，然后去图书馆还书，最后去体育场上体育课。
+            <div class="follow-up">
+                <strong>追问：你是如何决定走哪条路的？</strong><br>
+                A: 说实话我还不太熟悉所有的路线。我一般跟着同学走，或者用地图导航。
+            </div>
+            <div class="follow-up">
+                <strong>追问：有不确定的时候吗？</strong><br>
+                A: 经常不确定！特别是第一次去的地方，有时候跟着导航还是会迷路。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你用工具导航吗？</strong><br>
+                A: 一直用，主要是高德地图。但有时候定位不准，特别是在建筑物附近。
+            </div>
+        </div>
+        
+        <div class="question">Q2: 告诉我上一次找新地方的经历。</div>
+        <div class="answer">
+            A: 上周要去医务室，我完全不知道在哪。
+            <div class="follow-up">
+                <strong>追问：你做了什么？</strong><br>
+                A: 我先用地图搜索，显示在行政区。但到了那片区域还是找不到具体位置，问了两个路人才找到。
+            </div>
+            <div class="follow-up">
+                <strong>追问：花了多长时间？</strong><br>
+                A: 大概25分钟。本来身体就不舒服，找路的过程让我更难受了。
+            </div>
+            <div class="follow-up">
+                <strong>追问：感觉如何？</strong><br>
+                A: 很无助，也有点沮丧。作为新生，总是找不到路让我感觉自己很笨。
+            </div>
+        </div>
+        
+        <div class="question">Q3: 描述一次迷路的经历。</div>
+        <div class="answer">
+            A: 第一周去找实验室的时候，我在生物楼里转了快半个小时。
+            <div class="follow-up">
+                <strong>追问：什么导致了困惑？</strong><br>
+                A: 那栋楼的结构很复杂，有A座B座C座，房间号也很乱。我拿着纸条上的房间号，完全找不到逻辑。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你最后怎么找到的？</strong><br>
+                A: 问了一个看起来像研究生的学长，他带我过去的。
+            </div>
+            <div class="follow-up">
+                <strong>追问：什么能帮到你？</strong><br>
+                A: 如果楼里有更清楚的指示牌，或者手机上有室内地图就好了。我觉得应该像商场那样，有分层平面图。
+            </div>
+        </div>
+        
+        <div class="question">Q5: 上周有因为找地点或估计时间不准而迟到吗？</div>
+        <div class="answer">
+            A: 有！第二节课差点迟到，因为我不知道从宿舍到那个教学楼要走15分钟。
+            <div class="follow-up">
+                <strong>追问：具体发生了什么？</strong><br>
+                A: 我以为10分钟够了，结果低估了距离。最后一路小跑，到教室的时候已经上课了。
+            </div>
+            <div class="follow-up">
+                <strong>追问：什么能防止这种情况？</strong><br>
+                A: 如果有个应用能告诉我准确的步行时间就好了。而且最好能考虑到课间人流量，因为下课时间路上特别挤。
+            </div>
+            <div class="follow-up">
+                <strong>追问：迟到有什么影响？</strong><br>
+                A: 很尴尬，进教室的时候所有人都看着我。而且老师点名我没听到，被记了一次缺勤。
+            </div>
+        </div>
+        
+        <h4>📚 话题2：寻找和使用学习空间</h4>
+        
+        <div class="question">Q1: 告诉我上一次找学习空间的经历。</div>
+        <div class="answer">
+            A: 周末想找个地方预习下周的实验，我去了图书馆。
+            <div class="follow-up">
+                <strong>追问：你是如何决定去哪里的？</strong><br>
+                A: 作为新生，我只知道图书馆可以学习。还不太了解其他的学习空间。
+            </div>
+            <div class="follow-up">
+                <strong>追问：到了那里发生了什么？</strong><br>
+                A: 人特别多，我在一楼转了一圈没找到位置，去二楼也满了。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你最后留在那里了吗？</strong><br>
+                A: 在三楼找到了一个靠角落的位置，虽然有点偏，但至少有地方坐。
+            </div>
+        </div>
+        
+        <div class="question">Q2: 能描述一个你在找可用学习空间时遇到的挫折经历吗？</div>
+        <div class="answer">
+            A: 期中考试前一周，我想找个地方好好复习，但到哪里都是人。
+            <div class="follow-up">
+                <strong>追问：什么让它令人沮丧？</strong><br>
+                A: 我去了图书馆、教学楼、甚至食堂，都找不到安静的座位。感觉特别焦虑，因为时间在流逝但我还在找地方。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你花了多少时间找？</strong><br>
+                A: 那天花了一个多小时，最后在宿舍学习，但效果不好。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你最后做了什么？</strong><br>
+                A: 回宿舍学习，但室友在打游戏，很吵。我戴着耳机勉强学了一会儿。
+            </div>
+        </div>
+        
+        <div class="question">Q3: 你通常如何在去之前了解某个空间是否可用？</div>
+        <div class="answer">
+            A: 我不知道怎么提前了解，每次都是直接去碰运气。
+            <div class="follow-up">
+                <strong>追问：能给我一个具体例子吗？</strong><br>
+                A: 上周六早上8点我去图书馆，以为那么早应该有位置，结果已经坐了很多人。可能都是早起占座的。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你的方法有没有失败过？</strong><br>
+                A: 经常失败。有时候白跑一趟，特别是考试周。
+            </div>
+        </div>
+        
+        <div class="question">Q4: 告诉我一次你需要特定类型的学习环境的经历。</div>
+        <div class="answer">
+            A: 要准备英语口语考试，我需要一个可以大声朗读的地方。
+            <div class="follow-up">
+                <strong>追问：那次寻找容易还是困难？</strong><br>
+                A: 很困难。图书馆太安静不能出声，教室可能有人上课，宿舍室友在休息。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你得到你需要的了吗？</strong><br>
+                A: 最后去了校园的一个偏僻角落，在室外练习。但那天有点冷，而且总担心影响到别人。
+            </div>
+            <div class="follow-up">
+                <strong>追问：整个过程花了多长时间？</strong><br>
+                A: 找地方花了半小时，练习的效果也不是特别好。
+            </div>
+        </div>
+        
+        <h4>🎉 话题3：校园活动与社交活动</h4>
+        
+        <div class="question">Q1: 想想你参加的上一个校园活动。</div>
+        <div class="answer">
+            A: 上个月参加了新生入学教育讲座。
+            <div class="follow-up">
+                <strong>追问：你是如何第一次听说它的？</strong><br>
+                A: 辅导员在班级群里通知的，是必须参加的活动。
+            </div>
+            <div class="follow-up">
+                <strong>追问：找到所需信息容易吗？</strong><br>
+                A: 还好，因为可以跟着其他同学一起去。如果自己去可能会迷路。
+            </div>
+        </div>
+        
+        <div class="question">Q2: 能告诉我一次你错过了想参加的活动的经历吗？</div>
+        <div class="answer">
+            A: 有一个社团招新的活动，我很感兴趣但错过了。
+            <div class="follow-up">
+                <strong>追问：你为什么错过了？</strong><br>
+                A: 我不知道有这个活动。后来才知道信息只在某个公众号上发了，我没有关注那个号。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你什么时候意识到你错过了？</strong><br>
+                A: 一周后看到社团的活动照片，问了才知道招新已经结束了。
+            </div>
+            <div class="follow-up">
+                <strong>追问：错过它你感觉如何？</strong><br>
+                A: 很遗憾，因为我对那个社团很感兴趣。感觉作为新生，很多信息渠道我都不知道。
+            </div>
+        </div>
+        
+        <div class="question">Q3: 你通常如何了解校园里发生的事情？</div>
+        <div class="answer">
+            A: 主要靠班级群、辅导员通知，还有室友朋友告诉我。
+            <div class="follow-up">
+                <strong>追问：你最常查看哪些来源？</strong><br>
+                A: 微信群是主要的，因为大部分通知都在那里。偶尔看看学校APP。
+            </div>
+            <div class="follow-up">
+                <strong>追问：为什么是这些来源？</strong><br>
+                A: 因为作为新生，我还不知道所有的信息渠道。我只能依赖学校和老师主动告诉我们的。
+            </div>
+            <div class="follow-up">
+                <strong>追问：有没有不再查看的来源？</strong><br>
+                A: 学校网站太复杂了，我试过几次都找不到想要的信息，就不怎么看了。
+            </div>
+        </div>
+        
+        <div class="question">Q5: 描述一个你发现活动信息不完整的情况。</div>
+        <div class="answer">
+            A: 看到一个志愿者活动的招募，但信息很模糊。
+            <div class="follow-up">
+                <strong>追问：缺少了什么信息？</strong><br>
+                A: 没说具体做什么、要去哪里、需要多长时间、有没有什么要求。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你如何尝试获取所需信息？</strong><br>
+                A: 我在通知下面留言询问，但没人回复。后来就放弃了。
+            </div>
+            <div class="follow-up">
+                <strong>追问：你最后参加了吗？为什么？</strong><br>
+                A: 没有。因为信息不明确，我不知道自己是否符合条件，也担心时间冲突。
+            </div>
+        </div>
+        
+        <h4>💡 结束访谈</h4>
+        <div class="question">有什么我们没谈到但你认为重要的吗？</div>
+        <div class="answer">A: 作为新生，我觉得最需要的是一个完整的校园导航和信息指南。很多时候我不知道该问谁，该去哪里找信息。</div>
+        
+        <div class="question">你有什么改善建议吗？</div>
+        <div class="answer">A: 希望有一个新生专用的应用，能告诉我们所有基本信息，包括建筑位置、学习空间、活动信息等。最好有详细的地图和实时更新。</div>
+        
+        <div class="question">最后的想法？</div>
+        <div class="answer">A: 如果真的有这样的应用，对新生来说太有用了！可以大大减少我们的迷茫和焦虑。</div>
+        
+        <div class="highlight" style="margin-top: 20px;">
+            <h4 style="margin-top: 0;">✨ 核心洞察</h4>
+            <ul>
+                <li><strong>痛点1：</strong>作为新生经常迷路，在生物楼找实验室花了30分钟</li>
+                <li><strong>痛点2：</strong>不知道如何提前了解学习空间可用性，只能"碰运气"</li>
+                <li><strong>痛点3：</strong>信息渠道不清晰，错过感兴趣的社团招新</li>
+                <li><strong>痛点4：</strong>估计不准到达时间导致迟到和缺勤记录</li>
+                <li><strong>需求：</strong>新生专用的完整校园导航和信息指南</li>
+                <li><strong>情感：</strong>频繁迷路让人感到无助和沮丧，影响校园适应</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 访谈总体发现 -->
+    <h3 style="margin-top: 50px;">📊 跨访谈综合分析</h3>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">受访者认为室内导航重要</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">75%</div>
+            <div class="stat-label">经常遇到找座位困难</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">错过过感兴趣的活动</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">20-40分钟</div>
+            <div class="stat-label">平均寻路/找座位时间</div>
+        </div>
+    </div>
+    
+    <div class="highlight">
+        <h4 style="margin-top: 0;">🎯 关键用户痛点总结</h4>
+        <ul>
+            <li><strong>导航困难：</strong>室内导航完全缺失，房间编号逻辑混乱，新生和跨校区场景尤为突出</li>
+            <li><strong>时间浪费：</strong>寻找学习空间平均耗时15-60分钟，严重影响学习效率</li>
+            <li><strong>信息焦虑：</strong>不确定性导致压力和担心迟到，影响学习状态</li>
+            <li><strong>机会损失：</strong>因信息分散错过讲座、实习、社团等重要机会</li>
+            <li><strong>新生困境：</strong>信息渠道不清晰，缺乏系统引导，适应期长且焦虑</li>
+            <li><strong>预约系统问题：</strong>与实际情况不符，浪费规划时间</li>
+            <li><strong>信息传达难：</strong>活动组织者也面临信息传达困难</li>
+        </ul>
+    </div>
+    
+    <div class="info-box">
+        <h4 style="margin-top: 0;">💡 用户需求优先级</h4>
+        <p><strong>基于4次深度访谈的综合分析：</strong></p>
+        <ol>
+            <li><strong>室内外一体化导航系统</strong> - 所有受访者都提到，特别是室内导航缺失严重</li>
+            <li><strong>学习空间实时信息查询</strong> - 75%受访者有强烈需求，避免白跑浪费时间</li>
+            <li><strong>活动信息统一平台</strong> - 100%受访者错过过活动，信息分散是核心问题</li>
+            <li><strong>新生专属引导功能</strong> - 新生用户有特殊需求，需要系统性校园指南</li>
+            <li><strong>个性化推送系统</strong> - 避免信息过载，推送相关内容</li>
+            <li><strong>准确的时间估算</strong> - 考虑人流量等因素，帮助规划行程</li>
+        </ol>
+    </div>
+</div>
+
+
+        
+        <!-- 调查数据 -->
+        <div id="survey" class="section">
+            <h2>问卷调查数据分析</h2>
+            
+            <div class="info-box">
+                <p><strong>调查说明：</strong>本次问卷调查共收集15份有效问卷，调查时间为2024年10月15日-10月20日。问卷包含19个问题，涵盖基本信息、导航体验、学习空间和活动参与四个维度。</p>
+            </div>
+            
+            <h3>📊 基本信息统计</h3>
+            
+            <h4>学年分布</h4>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>学年</th>
+                        <th>人数</th>
+                        <th>占比</th>
+                    </tr>
+                    <tr>
+                        <td>大一</td>
+                        <td>3</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>大二</td>
+                        <td>4</td>
+                        <td>27%</td>
+                    </tr>
+                    <tr>
+                        <td>大三</td>
+                        <td>3</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>大四</td>
+                        <td>2</td>
+                        <td>13%</td>
+                    </tr>
+                    <tr>
+                        <td>研究生</td>
+                        <td>3</td>
+                        <td>20%</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h4>专业分布</h4>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">4人</div>
+                    <div class="stat-label">计算机科学与技术</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3人</div>
+                    <div class="stat-label">网络安全</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4人</div>
+                    <div class="stat-label">法学</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4人</div>
+                    <div class="stat-label">生命科学</div>
+                </div>
+            </div>
+            
+            <h3>🗺️ 导航体验分析</h3>
+            
+            <h4>导航信心程度</h4>
+            <div class="chart-placeholder">
+                <p>📊 数据可视化图表</p>
+                <p>非常自信：27% | 比较自信：53% | 不太自信：13% | 非常不自信：7%</p>
+            </div>
+            
+            <h4>找位置困难频率（过去一个月）</h4>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>频率</th>
+                        <th>人数</th>
+                        <th>占比</th>
+                    </tr>
+                    <tr>
+                        <td>从不</td>
+                        <td>3</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>很少 (1-2次)</td>
+                        <td>4</td>
+                        <td>27%</td>
+                    </tr>
+                    <tr>
+                        <td>偶尔 (3-5次)</td>
+                        <td>5</td>
+                        <td>33%</td>
+                    </tr>
+                    <tr>
+                        <td>频繁 (6-10次)</td>
+                        <td>2</td>
+                        <td>13%</td>
+                    </tr>
+                    <tr>
+                        <td>非常频繁 (>10次)</td>
+                        <td>1</td>
+                        <td>7%</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="highlight">
+                <h4 style="margin-top: 0;">导航关键发现</h4>
+                <ul>
+                    <li><strong>53%</strong> 的用户在过去一个月遇到过找位置困难（3次以上）</li>
+                    <li><strong>73%</strong> 认为室内导航"非常重要"或"极其重要"</li>
+                    <li><strong>80%</strong> 使用Google Maps作为主要导航工具，但室内导航缺失</li>
+                    <li>新生（在校<6个月）导航信心显著低于高年级学生</li>
+                </ul>
+            </div>
+            
+            <h3>📚 学习空间使用分析</h3>
+            
+            <h4>学习空间满意度</h4>
+            <div class="chart-placeholder">
+                <p>📊 满意度分布</p>
+                <p>满意：33% | 中立：20% | 不满意：33% | 非常不满意：13%</p>
+            </div>
+            
+            <h4>寻找学习空间所需时间</h4>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">27%</div>
+                    <div class="stat-label">0-5分钟</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20%</div>
+                    <div class="stat-label">6-10分钟</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">33%</div>
+                    <div class="stat-label">11-20分钟</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20%</div>
+                    <div class="stat-label">20分钟以上</div>
+                </div>
+            </div>
+            
+            <h4>实时查询功能使用意愿</h4>
+            <div class="info-box">
+                <p><strong>73%</strong> 的用户表示"非常可能"或"极其可能"使用实时学习空间查询功能</p>
+                <p><strong>66%</strong> 的用户经常需要多次寻找才能找到合适的学习空间</p>
+            </div>
+            
+            <h3>🎉 校园活动参与分析</h3>
+            
+            <h4>活动发现满意度</h4>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>满意度</th>
+                        <th>人数</th>
+                        <th>占比</th>
+                    </tr>
+                    <tr>
+                        <td>满意</td>
+                        <td>5</td>
+                        <td>33%</td>
+                    </tr>
+                    <tr>
+                        <td>中立</td>
+                        <td>3</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>不满意</td>
+                        <td>5</td>
+                        <td>33%</td>
+                    </tr>
+                    <tr>
+                        <td>非常不满意</td>
+                        <td>2</td>
+                        <td>13%</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h4>获取活动信息的主要渠道（多选）</h4>
+            <div class="chart-placeholder">
+                <p>📊 信息渠道使用率</p>
+                <ul style="text-align: left; display: inline-block;">
+                    <li>社交媒体：80%</li>
+                    <li>朋友/口碑：73%</li>
+                    <li>学生组织页面：60%</li>
+                    <li>大学邮件：53%</li>
+                    <li>校园海报：40%</li>
+                    <li>大学网站：33%</li>
+                    <li>校园应用：13%</li>
+                </ul>
+            </div>
+            
+            <h3>💡 开放式问题精选回答</h3>
+            
+            <h4>Q18: 校园导航或查找设施信息的最大挑战？</h4>
+            <div class="interview-card">
+                <p>"<em>室内导航完全没有，大型教学楼里经常迷路，房间号编排逻辑看不懂。</em>" - 编号001</p>
+                <p>"<em>所有东西都很难找！作为新生真的太难了，每天都在迷路。</em>" - 编号011</p>
+                <p>"<em>信息分散在不同平台，找一个东西要查好几个网站或APP。</em>" - 编号003</p>
+                <p>"<em>临时的施工或路段封闭没有及时通知，导致要绕远路或者迟到。</em>" - 编号005</p>
+            </div>
+            
+            <h4>Q19: 最希望添加的功能？</h4>
+            <div class="interview-card">
+                <p>"<em>实时显示图书馆和自习室的座位情况，这样就不用白跑了。</em>" - 编号001 (被提及6次)</p>
+                <p>"<em>室内AR导航功能，可以用手机摄像头实时显示路线箭头。</em>" - 编号002 (被提及5次)</p>
+                <p>"<em>全校统一的活动日历，可以订阅感兴趣的类别。</em>" - 编号007 (被提及4次)</p>
+                <p>"<em>新生专用的校园导览和生存指南。</em>" - 编号004 (被提及3次)</p>
+            </div>
+            
+            <h3>🎯 核心发现总结</h3>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4 style="color: white; margin-top: 0;">导航需求</h4>
+                    <div class="stat-number">73%</div>
+                    <p style="opacity: 0.9;">认为室内导航极其/非常重要</p>
+                </div>
+                <div class="stat-card">
+                    <h4 style="color: white; margin-top: 0;">空间痛点</h4>
+                    <div class="stat-number">66%</div>
+                    <p style="opacity: 0.9;">对学习空间查找方式不满意</p>
+                </div>
+                <div class="stat-card">
+                    <h4 style="color: white; margin-top: 0;">功能意愿</h4>
+                    <div class="stat-number">73%</div>
+                    <p style="opacity: 0.9;">愿意使用实时查询功能</p>
+                </div>
+                <div class="stat-card">
+                    <h4 style="color: white; margin-top: 0;">信息困境</h4>
+                    <div class="stat-number">46%</div>
+                    <p style="opacity: 0.9;">对活动信息获取不满意</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h4 style="margin-top: 0;">用户需求优先级（基于开放式回答）</h4>
+                <ol>
+                    <li><strong>学习空间实时信息</strong> - 最多次提及（6次）</li>
+                    <li><strong>室内导航功能</strong> - 5次提及</li>
+                    <li><strong>活动信息整合</strong> - 4次提及</li>
+                    <li><strong>新生引导功能</strong> - 3次提及</li>
+                </ol>
+            </div>
+            
+            <h3>📈 数据洞察与设计建议</h3>
+            
+            <div class="info-box">
+                <h4 style="margin-top: 0;">基于数据的产品设计方向</h4>
+                <ul>
+                    <li><strong>核心功能1：</strong>开发精准的室内外一体化导航系统，支持AR实景导航</li>
+                    <li><strong>核心功能2：</strong>提供学习空间实时占用情况查询和预约功能</li>
+                    <li><strong>核心功能3：</strong>建立统一的活动信息聚合平台，实现个性化推荐</li>
+                    <li><strong>特殊关注：</strong>为新生设计专门的引导模块和校园生存指南</li>
+                    <li><strong>信息架构：</strong>简化信息获取流程，减少平台切换次数</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <p><strong>智慧校园导航团队</strong></p>
+        <p>团队成员：许嘉诺、郑春英、郑阳</p>
+        <p>调查时间：2024年10月15日 - 10月20日</p>
+        <p>&copy; 2024 Smart Campus Navigation Team. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // 导航切换功能
+        function showSection(sectionId) {
+            // 隐藏所有section
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // 显示选中的section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // 更新导航栏active状态
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // 滚动到顶部
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>
